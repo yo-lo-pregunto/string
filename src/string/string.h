@@ -1,7 +1,23 @@
+/**
+ * @file doxygen_c.h
+ * @author My Self
+ * @date 9 Sep 2012
+ * @brief File containing example of doxygen usage for quick reference.
+ *
+ * Here typically goes a more extensive explanation of what the header
+ * defines. Doxygens tags are words preceeded by either a backslash @\
+ * or by an at symbol @@.
+ * @see http://www.stack.nl/~dimitri/doxygen/docblocks.html
+ * @see http://www.stack.nl/~dimitri/doxygen/commands.html
+ */
+
 #ifndef _STRING_H_
 #define _STRING_H_
 
+// Standar libraries
+#include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 typedef struct string string;
 typedef string* string_t;

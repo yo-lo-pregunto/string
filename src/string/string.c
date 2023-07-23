@@ -1,10 +1,13 @@
-#include <assert.h>
+/**
+ * @file string.c
+ * @author yo-lo-pregunto
+ * @date 23 July 2023
+ * @brief Base class for String object.
+ *
+ */
 
-#include <stdint.h>
+#include <assert.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <err.h>
 
 #include "string.h"
 
@@ -69,17 +72,17 @@ static inline str_result compare(const char *a, const char *b, uint32_t len) {
 
 // Slice method
 void print_slice(slice_t *slice) {
-    printf("slice: %p\n", slice);
-    printf("-> text: %s\n", slice->str);
-    printf("-> length: %u\n", slice->length);
-    printf("-> next ptr: %p\n", slice->next);
+//    printf("slice: %p\n", slice);
+//    printf("-> text: %s\n", slice->str);
+//    printf("-> length: %u\n", slice->length);
+//    printf("-> next ptr: %p\n", slice->next);
 }
 
 void print_linkedlist(slice_t *head) {
     uint32_t n = 0;
     slice_t *slice = head;
 
-    printf("Printing linkedlist\n");
+//    printf("Printing linkedlist\n");
 
     while(slice != NULL) {
         print_slice(slice);
@@ -87,7 +90,7 @@ void print_linkedlist(slice_t *head) {
         n++;
     }
 
-    printf("linkedlist has %u elements\n", n);
+//    printf("linkedlist has %u elements\n", n);
 }
 
 slice_t* new_slice(str_t str) {
@@ -122,7 +125,7 @@ void remove_slices(slice_t **head) {
     slice_t *next = curr->next;
 
     while(curr != NULL) {
-        printf("Removing ");
+//        printf("Removing ");
         print_slice(curr);
         next = curr->next;
         free(curr);
@@ -160,15 +163,15 @@ slice_t* search_slice(slice_t **head, variants_t variant) {
 }
 
 void print_string(string_t string) {
-    printf("String: '%s' { \n", string->text);
-    printf("length: %u\n", string->length);
-    printf("Location:  %p {\n", string);
-    printf(" length: %p\n", &string->length);
-    printf(" text: %p\n", &string->text);
-    printf(" slices: %p\n", &string->slices);
-    printf(" }\n");
-    print_linkedlist(string->slices);
-    printf("}\n");
+//    printf("String: '%s' { \n", string->text);
+//    printf("length: %u\n", string->length);
+//    printf("Location:  %p {\n", string);
+//    printf(" length: %p\n", &string->length);
+//    printf(" text: %p\n", &string->text);
+//    printf(" slices: %p\n", &string->slices);
+//    printf(" }\n");
+//    print_linkedlist(string->slices);
+//    printf("}\n");
 }
 
 string_t string_new(const char *text) {
@@ -200,7 +203,7 @@ string_t string_new(const char *text) {
 }
 
 void string_destroy(string_t *string) {
-    printf("destroy\n");
+//    printf("destroy\n");
     if (is_null_ptr(string)) {
         return;
     }
@@ -228,7 +231,7 @@ str_t string_text(string_t string) {
 
 int32_t string_len(string_t string) {
     if (is_null_ptr(string)) {
-        return NULL_PTR;
+        return 1;
     }
 
     return string->length - 1U;
@@ -341,32 +344,4 @@ str_result text_equal(str_t a, str_t b) {
     }
 
     return compare(a, b, size(a));
-}
-
-int main(int argc, char *argv[])
-{
-    string_t string = string_new("paco MEMO");
-
-    assert(string != NULL);
-
-    assert(string_len(string) == 9);
-
-    assert(str_equal(string, "paco MEMO") == Equal);
-
-    str_t txt = string_capitalize(string);
-    assert(text_equal(txt, "Paco MEMO") == Equal);
-
-    txt = string_capitalize(string);
-    printf("%s\n", txt);
-
-    txt = string_case_fold(string);
-    assert(text_equal(txt, "paco memo") == Equal);
-
-    txt = string_capitalize(string);
-    printf("%s\n", txt);
-
-    string_destroy(&string);
-    assert(string == NULL);
-
-    return 0;
 }
