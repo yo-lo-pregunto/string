@@ -6,27 +6,33 @@
  *
  */
 
-#include <assert.h>
-#include <stdio.h>
-
 #include "string.h"
 
+/*! @brief Distance between lower and uppercase in a ASCII table */
 #define CASE_GAP                    (32U)
 
-// Operation
+/*! @brief Check if two pointers are eaqul */
 #define a_is_b(a, b)                ((a) == (b))
+
+/*! @brief Check if is a NULL pointer */
 #define is_null_ptr(a)              ((a) == NULL)
-#define is_a_null(a)                (is_null_ptr(a) << 1U)
-#define is_b_null(b)                (is_null_ptr(b) << 2U)
+
+/*! @brief Shift One to the left 'offset' positions */
 #define set_flag(offset)            ((1U) << offset)  
 
+/*! @brief List of variants created */
 typedef enum variants {
     CAP_VAR,
     CASE_FOLD_VAR,
 }variants_t;
 
+/*! @brief No Variant has been created */
 #define NO_VARIANTS                 (0U)
+
+/*! @brief Set a variant to a variable */
 #define set_variant(var)            (set_flag(var))
+
+/*! @brief Check if a variants is set */
 #define is_variant_set(x, var)      (x & set_flag(var))
 
 typedef struct slice {
