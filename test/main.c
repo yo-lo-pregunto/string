@@ -17,13 +17,11 @@ int main(int argc, char *argv[])
     assert(text_equal(txt, "Paco MEMO") == Equal);
 
     txt = string_capitalize(string);
-    printf("%s\n", txt);
 
     txt = string_case_fold(string);
     assert(text_equal(txt, "paco memo") == Equal);
 
     txt = string_capitalize(string);
-    printf("%s\n", txt);
 
     string_destroy(&string);
     assert(string == NULL);

@@ -6,25 +6,16 @@
  *
  */
 
+#include <stdio.h>
+
 #include "string.h"
+#include "slice.h"
 
 /*! @brief Distance between lower and uppercase in a ASCII table */
 #define CASE_GAP                    (32U)
 
-/*! @brief Check if two pointers are eaqul */
-#define a_is_b(a, b)                ((a) == (b))
-
-/*! @brief Check if is a NULL pointer */
-#define is_null_ptr(a)              ((a) == NULL)
-
 /*! @brief Shift One to the left 'offset' positions */
 #define set_flag(offset)            ((1U) << offset)  
-
-/*! @brief List of variants created */
-typedef enum variants {
-    CAP_VAR,
-    CASE_FOLD_VAR,
-}variants_t;
 
 /*! @brief No Variant has been created */
 #define NO_VARIANTS                 (0U)
@@ -35,12 +26,6 @@ typedef enum variants {
 /*! @brief Check if a variants is set */
 #define is_variant_set(x, var)      (x & set_flag(var))
 
-typedef struct slice {
-    struct slice* next;
-    uint32_t length;
-    variants_t variant;
-    str_t str;
-}slice_t;
 
 struct string {
     uint32_t length;
@@ -48,125 +33,6 @@ struct string {
     char* text;
     slice_t* slices;
 };
-
-// Basic text methods
-static inline uint32_t size(const char *text) {
-    uint32_t size = 0U;
-
-    while (text[size++] != '\0');
-
-    return size;
-}
-
-static inline void copy(char* dest, const char *text, uint32_t len) {
-    for (uint32_t i = 0; i < len; i++) {
-        dest[i] = text[i];
-    }
-    
-    dest[len - 1U] = '\0';
-}
-
-static inline str_result compare(const char *a, const char *b, uint32_t len) {
-    for (uint32_t i = 0; i < len; i++) {
-        if (a[i] != b[i]) {
-            return No_equal;
-        }
-    }
-
-    return Equal;
-}
-
-// Slice method
-void print_slice(slice_t *slice) {
-//    printf("slice: %p\n", slice);
-//    printf("-> text: %s\n", slice->str);
-//    printf("-> length: %u\n", slice->length);
-//    printf("-> next ptr: %p\n", slice->next);
-}
-
-void print_linkedlist(slice_t *head) {
-    uint32_t n = 0;
-    slice_t *slice = head;
-
-//    printf("Printing linkedlist\n");
-
-    while(slice != NULL) {
-        print_slice(slice);
-        slice = slice->next;
-        n++;
-    }
-
-//    printf("linkedlist has %u elements\n", n);
-}
-
-slice_t* new_slice(str_t str) {
-    if (is_null_ptr(str)) {
-        return NULL;
-    }
-
-    slice_t *slice = malloc(sizeof(slice_t));
-
-    if (is_null_ptr(slice)) {
-        return NULL;
-    }
-
-    slice->length = size(str);
-
-    char* text = malloc(slice->length);
-
-    if (is_null_ptr(text)) {
-        return NULL;
-    }
-
-    copy(text, str, slice->length);
-    slice->str = text;
-
-    slice->next = NULL;
-
-    return slice;
-}
-
-void remove_slices(slice_t **head) {
-    slice_t *curr = *head;
-    slice_t *next = curr->next;
-
-    while(curr != NULL) {
-//        printf("Removing ");
-        print_slice(curr);
-        next = curr->next;
-        free(curr);
-        curr = next;
-    }
-
-    *head = NULL;
-}
-
-slice_t* append_slice(slice_t **head, str_t str) {
-
-    if (*head == NULL) {
-        *head = new_slice(str);
-        return *head;
-    }
-
-    slice_t *slice = *head;
-    while (slice->next != NULL) {
-        slice = slice->next;
-    }
-
-    slice->next = new_slice(str);
-
-    return slice->next;
-}
-
-slice_t* search_slice(slice_t **head, variants_t variant) {
-    slice_t *slice = *head;
-
-    while ((slice != NULL) && (slice->variant != variant)) {
-        slice = slice->next;
-    }
-
-    return slice;
-}
 
 void print_string(string_t string) {
 //    printf("String: '%s' { \n", string->text);

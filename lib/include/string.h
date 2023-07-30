@@ -19,10 +19,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "base.h"
+
 typedef struct string string;
 typedef string* string_t;
-
-typedef const char* str_t;
 
 typedef enum str_result {
     Equal = 0,
