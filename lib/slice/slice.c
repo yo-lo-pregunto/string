@@ -65,7 +65,6 @@ void remove_slices(slice_t **head) {
     slice_t *next = curr->next;
 
     while(curr != NULL) {
-//        printf("Removing ");
         print_slice(curr);
         next = curr->next;
         free(curr);
